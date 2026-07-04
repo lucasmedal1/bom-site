@@ -50,7 +50,7 @@ export default function Hero() {
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <a
             href="mailto:lucas@blueoceanmaterials.com?subject=Quote%20Request"
-            className="inline-flex items-center gap-2 rounded-xl bg-ocean px-7 py-3.5 text-sm font-semibold text-white shadow-lg shadow-ocean/25 transition-all hover:bg-ocean/90 hover:shadow-xl hover:shadow-ocean/30"
+            className="btn btn-primary px-7 py-3.5 text-sm shadow-lg shadow-ocean/25 hover:shadow-xl hover:shadow-ocean/30"
           >
             Request a Quote
           </a>

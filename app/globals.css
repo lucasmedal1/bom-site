@@ -24,9 +24,16 @@
   --color-sunset: var(--sunset-orange);
   --color-sand: var(--soft-sand);
   --color-mint: var(--mint);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-geist-mono);
-  --font-display: var(--font-inter);
+  --font-sans: var(--font-ibm-sans);
+  --font-mono: var(--font-ibm-mono);
+  --font-display: var(--font-chakra);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-chakra), system-ui, sans-serif;
 }
 
 * {
@@ -40,8 +47,50 @@ html {
 body {
   background: var(--off-white);
   color: var(--charcoal);
-  font-family: var(--font-inter), system-ui, sans-serif;
+  font-family: var(--font-ibm-sans), system-ui, sans-serif;
   overflow-x: hidden;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0;
+  font-family: var(--font-chakra), system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: background-color 0.15s, border-color 0.15s, box-shadow 0.15s;
+}
+
+.btn-primary {
+  background: var(--ocean-blue);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: color-mix(in srgb, var(--ocean-blue) 90%, black);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--charcoal);
+  border: 1px solid color-mix(in srgb, var(--charcoal) 15%, transparent);
+}
+
+.btn-secondary:hover {
+  border-color: color-mix(in srgb, var(--charcoal) 25%, transparent);
+}
+
+.btn-dark {
+  background: var(--charcoal);
+  color: white;
+}
+
+.btn-dark:hover {
+  background: color-mix(in srgb, var(--charcoal) 90%, white);
 }
 
 /* Blueprint grid */

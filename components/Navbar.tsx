@@ -2,7 +2,7 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-charcoal/5 bg-off-white/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-        <a href="#" className="text-sm font-semibold tracking-tight text-charcoal">
+        <a href="#" className="font-display text-sm font-semibold tracking-wide text-charcoal">
           Blue Ocean Materials
         </a>
 
@@ -36,7 +36,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <a
             href="mailto:lucas@blueoceanmaterials.com?subject=Quote%20Request"
-            className="rounded-lg bg-ocean px-4 py-2 text-sm font-medium text-white transition-all hover:bg-ocean/90"
+            className="btn btn-primary px-4 py-2 text-sm"
           >
             Request a Quote
           </a>

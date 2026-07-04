@@ -76,7 +76,7 @@ export default function SurfaceFinishing() {
 
             <a
               href="mailto:lucas@blueoceanmaterials.com?subject=Surface%20Finishing%20-%20Production%20Slot%20Request"
-              className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-charcoal px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-charcoal/90"
+              className="btn btn-dark mt-6 w-full px-6 py-3.5 text-sm"
             >
               Secure First Production Slot
             </a>

@@ -17,7 +17,7 @@ export default function FinalCTA() {
 
         <a
           href="mailto:lucas@blueoceanmaterials.com?subject=Quote%20Request"
-          className="mt-10 inline-flex items-center gap-3 rounded-2xl bg-ocean px-10 py-5 text-base font-semibold text-white shadow-lg shadow-ocean/20 transition-all hover:bg-ocean/90"
+          className="btn btn-primary mt-10 px-10 py-5 text-sm shadow-lg shadow-ocean/20"
         >
           Request a Quote
         </a>

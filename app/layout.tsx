@@ -24,33 +24,27 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://blueoceanmaterials.com"),
+  metadataBase: new URL("https://www.blueoceanmaterials.com"),
   title: "Blue Ocean Materials — Engineering Plastics, Delivered Smarter",
   description:
-    "Precision-cut engineering plastics with quotes in under 30 minutes. PEEK, Ultem, Delrin, PPS, PTFE and certified materials for aerospace, semiconductor, and industrial buyers.",
+    "Precision-cut PEEK, Ultem, Delrin & certified engineering plastics. Quotes in under 30 minutes for aerospace, semiconductor, and industrial buyers.",
+  alternates: {
+    canonical: "https://www.blueoceanmaterials.com",
+  },
   openGraph: {
-    title: "Blue Ocean Materials",
+    title: "Blue Ocean Materials — Engineering Plastics",
     description:
-      "Precision-cut engineering plastics with quotes in under 30 minutes. Certified materials for aerospace, semiconductor, and industrial buyers.",
-    url: "https://blueoceanmaterials.com",
+      "Precision-cut PEEK, Ultem, Delrin & certified engineering plastics. Quotes in under 30 minutes.",
+    url: "https://www.blueoceanmaterials.com",
     siteName: "Blue Ocean Materials",
     type: "website",
     locale: "en_US",
-    images: [
-      {
-        url: "/polymer-image.jpeg",
-        width: 250,
-        height: 200,
-        alt: "Precision engineering polymer structure",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Blue Ocean Materials",
+    title: "Blue Ocean Materials — Engineering Plastics",
     description:
-      "Precision-cut engineering plastics with quotes in under 30 minutes.",
-    images: ["/polymer-image.jpeg"],
+      "Precision-cut engineering plastics. Quotes in under 30 minutes.",
   },
 };
 

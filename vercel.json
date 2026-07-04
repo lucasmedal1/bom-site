@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "blueoceanmaterials.com" }],
+      "destination": "https://www.blueoceanmaterials.com/:path*",
+      "permanent": true
+    }
+  ]
+}

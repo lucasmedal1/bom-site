@@ -8,13 +8,6 @@ export default function Hero() {
       <div className="absolute top-0 right-0 h-[600px] w-[600px] rounded-full bg-gradient-to-bl from-teal/10 via-ocean/5 to-transparent blur-3xl" />
 
       <div className="relative mx-auto max-w-3xl px-6 text-center lg:px-8">
-        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-charcoal/10 bg-white/80 px-4 py-1.5 backdrop-blur-sm">
-          <span className="h-2 w-2 rounded-full bg-teal" />
-          <span className="font-mono text-xs tracking-wide text-charcoal/60">
-            QUOTING ACTIVE · &lt;30 MIN TURNAROUND
-          </span>
-        </div>
-
         <h1 className="text-4xl font-semibold leading-[1.1] tracking-tight text-charcoal sm:text-5xl lg:text-[3.5rem]">
           Engineering Plastics,
           <br />
@@ -23,7 +16,7 @@ export default function Hero() {
 
         <p className="mt-6 text-lg leading-relaxed text-charcoal/70">
           Receive a quote in under 30 minutes. Precision-cut PEEK, Ultem,
-          Delrin, PPS, PTFE and other engineering polymers.
+          Delrin, and other engineering polymers.
         </p>
 
         <div className="mt-6 flex justify-center">
@@ -49,7 +42,7 @@ export default function Hero() {
 
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <a
-            href="mailto:lucas@blueoceanmaterials.com?subject=Quote%20Request"
+            href="/rfq"
             className="btn btn-primary px-7 py-3.5 text-sm shadow-lg shadow-ocean/25 hover:shadow-xl hover:shadow-ocean/30"
           >
             Request a Quote

@@ -35,14 +35,38 @@ export default async function Image() {
           <div
             style={{
               display: "flex",
-              fontSize: 22,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "#2CB5A5",
+              alignItems: "center",
+              gap: 16,
               marginBottom: 20,
             }}
           >
-            Blue Ocean Materials
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 100 100"
+              fill="none"
+              width={44}
+              height={44}
+            >
+              <circle cx="50" cy="50" r="38" stroke="#0A0F1A" strokeWidth="4" />
+              <path
+                d="M14 62 C 28 54, 38 70, 50 62 S 72 54, 86 62"
+                stroke="#0A0F1A"
+                strokeWidth="4"
+                strokeLinecap="round"
+                fill="none"
+              />
+            </svg>
+            <div
+              style={{
+                display: "flex",
+                fontSize: 22,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                color: "#2CB5A5",
+              }}
+            >
+              Blue Ocean Materials
+            </div>
           </div>
           <div
             style={{

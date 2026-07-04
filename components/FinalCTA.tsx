@@ -16,7 +16,7 @@ export default function FinalCTA() {
         </p>
 
         <a
-          href="mailto:lucas@blueoceanmaterials.com?subject=Quote%20Request"
+          href="/rfq"
           className="btn btn-primary mt-10 px-10 py-5 text-sm shadow-lg shadow-ocean/20"
         >
           Request a Quote

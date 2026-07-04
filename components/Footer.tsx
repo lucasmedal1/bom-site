@@ -1,5 +1,7 @@
+import Logo from "@/components/Logo";
+
 const links = {
-  Products: ["PEEK", "Ultem", "Delrin", "PTFE", "Surface Finishing"],
+  Products: ["PEEK", "Ultem", "Delrin", "PTFE"],
   Industries: ["Semiconductors", "Aerospace", "Medical", "Robotics"],
   Company: ["About", "Contact"],
 };
@@ -10,11 +12,14 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-5">
           <div className="lg:col-span-2">
-            <a href="#" className="text-sm font-semibold text-charcoal">
-              Blue Ocean Materials
+            <a href="/" className="flex items-center gap-2.5">
+              <Logo variant="light" className="h-8 w-8 shrink-0" />
+              <span className="text-sm font-semibold text-charcoal">
+                Blue Ocean Materials
+              </span>
             </a>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-charcoal/50">
-              Precision-cut engineering plastics and surface finishing.
+              Precision-cut engineering plastics.
               Operational supply for industrial buyers.
             </p>
             <div className="mt-6 space-y-2">
@@ -43,14 +48,12 @@ export default function Footer() {
                   <li key={item}>
                     <a
                       href={
-                        item === "Surface Finishing"
-                          ? "#finishing"
-                          : item === "PEEK" ||
-                              item === "Ultem" ||
-                              item === "Delrin" ||
-                              item === "PTFE"
-                            ? "#materials"
-                            : "#"
+                        item === "PEEK" ||
+                        item === "Ultem" ||
+                        item === "Delrin" ||
+                        item === "PTFE"
+                          ? "#materials"
+                          : "#"
                       }
                       className="text-sm text-charcoal/60 transition-colors hover:text-charcoal"
                     >

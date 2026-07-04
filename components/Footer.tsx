@@ -10,35 +10,18 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-5">
           <div className="lg:col-span-2">
-            <a href="#" className="flex items-center gap-3">
-              <svg viewBox="0 0 32 32" className="h-7 w-7" aria-hidden>
-                <rect x="4" y="12" width="24" height="16" fill="#0F6FFF" rx="1" />
-                <polygon points="4,12 16,4 28,12" fill="#2CB5A5" />
-                <rect x="12" y="18" width="8" height="6" fill="#FAFAF7" opacity="0.9" />
-              </svg>
-              <span className="text-sm font-semibold text-charcoal">
-                Blue Ocean Materials
-              </span>
+            <a href="#" className="text-sm font-semibold text-charcoal">
+              Blue Ocean Materials
             </a>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-charcoal/50">
               The next generation digital infrastructure for engineering materials.
             </p>
-            <div className="mt-6 flex items-center gap-4">
+            <div className="mt-6">
               <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="font-mono text-xs text-charcoal/40 transition-colors hover:text-ocean"
-                aria-label="LinkedIn"
-              >
-                LinkedIn
-              </a>
-              <span className="text-charcoal/20">·</span>
-              <a
-                href="mailto:hello@blueoceanmaterials.com"
+                href="mailto:lucas@blueoceanmaterials.com"
                 className="font-mono text-xs text-charcoal/40 transition-colors hover:text-ocean"
               >
-                Email
+                lucas@blueoceanmaterials.com
               </a>
             </div>
           </div>

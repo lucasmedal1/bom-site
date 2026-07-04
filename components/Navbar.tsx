@@ -2,17 +2,8 @@ export default function Navbar() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b border-charcoal/5 bg-off-white/80 backdrop-blur-md">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-        <a href="#" className="group flex items-center gap-3">
-          <div className="relative flex h-8 w-8 items-center justify-center">
-            <svg viewBox="0 0 32 32" className="h-8 w-8" aria-hidden>
-              <rect x="4" y="12" width="24" height="16" fill="#0F6FFF" rx="1" />
-              <polygon points="4,12 16,4 28,12" fill="#2CB5A5" />
-              <rect x="12" y="18" width="8" height="6" fill="#FAFAF7" opacity="0.9" />
-            </svg>
-          </div>
-          <span className="text-sm font-semibold tracking-tight text-charcoal">
-            Blue Ocean Materials
-          </span>
+        <a href="#" className="text-sm font-semibold tracking-tight text-charcoal">
+          Blue Ocean Materials
         </a>
 
         <div className="hidden items-center gap-8 md:flex">

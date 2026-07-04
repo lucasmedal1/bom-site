@@ -56,41 +56,43 @@ function IndustryIcon({ name }: { name: string }) {
 }
 
 const industries = [
-  "Semiconductors",
-  "Medical Devices",
-  "Aerospace",
-  "Defense",
-  "Industrial Automation",
-  "Robotics",
+  { name: "Semiconductors", note: "Cleanroom-compatible polymers" },
+  { name: "Medical Devices", note: "Biocompatible grades available" },
+  { name: "Aerospace", note: "Certified high-performance materials" },
+  { name: "Defense", note: "Traceable, documented supply" },
+  { name: "Industrial Automation", note: "Precision blanks for machining" },
+  { name: "Robotics", note: "Low-friction and structural grades" },
 ];
 
 export default function Industries() {
   return (
-    <section id="industries" className="relative border-y border-charcoal/5 bg-white py-24 lg:py-32">
+    <section id="industries" className="relative py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <p className="font-mono text-xs tracking-widest text-teal/80">
-            APPLICATIONS
+            SECTORS
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-charcoal sm:text-4xl">
             Industries
           </h2>
+          <p className="mt-4 text-charcoal/60">
+            Supplying machine shops, aerospace suppliers, and semiconductor
+            manufacturers with certified engineering materials.
+          </p>
         </div>
 
         <div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {industries.map((industry) => (
             <div
-              key={industry}
-              className="group flex items-center gap-5 rounded-xl border border-charcoal/5 bg-off-white p-6 transition-all hover:border-charcoal/10 hover:bg-white hover:shadow-sm"
+              key={industry.name}
+              className="flex items-center gap-5 rounded-xl border border-charcoal/5 bg-white p-6"
             >
-              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-charcoal/5 text-charcoal transition-colors group-hover:bg-ocean/10 group-hover:text-ocean">
-                <IndustryIcon name={industry} />
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-lg bg-charcoal/5 text-charcoal">
+                <IndustryIcon name={industry.name} />
               </div>
               <div>
-                <h3 className="font-medium text-charcoal">{industry}</h3>
-                <p className="mt-0.5 font-mono text-[10px] tracking-wider text-charcoal/40">
-                  ENGINEERING GRADE
-                </p>
+                <h3 className="font-medium text-charcoal">{industry.name}</h3>
+                <p className="mt-0.5 text-xs text-charcoal/50">{industry.note}</p>
               </div>
             </div>
           ))}

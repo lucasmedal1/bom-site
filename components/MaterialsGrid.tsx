@@ -18,7 +18,6 @@ function MaterialIcon({ type }: { type: string }) {
         <ellipse cx="40" cy="60" rx="20" ry="6" fill={c.front} opacity="0.3" />
         <rect x="28" y="20" width="24" height="42" fill={c.side} rx="2" />
         <ellipse cx="40" cy="20" rx="12" ry="5" fill={c.top} />
-        <ellipse cx="40" cy="20" rx="8" ry="3" fill="white" opacity="0.2" />
       </svg>
     );
   }
@@ -29,7 +28,6 @@ function MaterialIcon({ type }: { type: string }) {
         <polygon points="10,50 40,30 70,50 40,70" fill={c.front} opacity="0.5" />
         <polygon points="10,50 40,30 40,10 10,30" fill={c.side} opacity="0.7" />
         <polygon points="40,10 70,30 40,30" fill={c.top} />
-        <line x1="40" y1="10" x2="40" y2="30" stroke="white" strokeWidth="0.5" opacity="0.3" />
       </svg>
     );
   }
@@ -39,20 +37,19 @@ function MaterialIcon({ type }: { type: string }) {
       <polygon points="20,45 45,30 70,45 45,60" fill={c.top} />
       <polygon points="70,45 70,60 45,75 45,60" fill={c.side} />
       <polygon points="20,45 20,60 45,75 45,60" fill={c.front} />
-      <line x1="32" y1="40" x2="58" y2="40" stroke="white" strokeWidth="0.5" opacity="0.2" />
     </svg>
   );
 }
 
 const materials = [
-  { name: "PEEK", desc: "High-temp, chemical resistant" },
-  { name: "Ultem", desc: "Flame retardant, structural" },
-  { name: "Delrin", desc: "Low friction acetal" },
-  { name: "PTFE", desc: "Non-stick, chemically inert" },
-  { name: "PPS", desc: "Dimensional stability" },
-  { name: "PVDF", desc: "UV and chemical resistance" },
-  { name: "Nylon", desc: "Tough, wear resistant" },
-  { name: "HDPE", desc: "Lightweight, impact resistant" },
+  { name: "PEEK", desc: "High-temp, chemical resistant", spec: "Aerospace · Semiconductor" },
+  { name: "Ultem", desc: "Flame retardant, structural", spec: "Aerospace · Medical" },
+  { name: "Delrin", desc: "Low friction acetal", spec: "Automation · Machining" },
+  { name: "PTFE", desc: "Non-stick, chemically inert", spec: "Chemical processing" },
+  { name: "PPS", desc: "Dimensional stability", spec: "Electronics · Automotive" },
+  { name: "PVDF", desc: "UV and chemical resistance", spec: "Semiconductor · Chemical" },
+  { name: "Nylon", desc: "Tough, wear resistant", spec: "Industrial · Robotics" },
+  { name: "HDPE", desc: "Lightweight, impact resistant", spec: "General industrial" },
 ];
 
 export default function MaterialsGrid() {
@@ -61,13 +58,14 @@ export default function MaterialsGrid() {
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <p className="font-mono text-xs tracking-widest text-ocean/60">
-            CATALOG
+            INVENTORY
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-charcoal sm:text-4xl">
             Materials
           </h2>
           <p className="mt-4 text-charcoal/60">
-            Advanced engineering plastics, precision-cut to your specifications.
+            Certified engineering polymers, precision-cut to specification.
+            In stock and available for immediate quoting.
           </p>
         </div>
 
@@ -75,22 +73,17 @@ export default function MaterialsGrid() {
           {materials.map((mat) => (
             <div
               key={mat.name}
-              className="group relative overflow-hidden rounded-2xl border border-charcoal/5 bg-white p-6 transition-all hover:border-ocean/20 hover:shadow-lg hover:shadow-ocean/5"
+              className="rounded-2xl border border-charcoal/5 bg-white p-6 transition-colors hover:border-charcoal/15"
             >
-              <div className="absolute top-0 right-0 h-24 w-24 rounded-bl-full bg-gradient-to-bl from-ocean/5 to-transparent transition-opacity group-hover:opacity-100 opacity-0" />
-              <div className="flex items-start justify-between">
-                <div>
-                  <h3 className="font-mono text-sm font-semibold tracking-wide text-charcoal">
-                    {mat.name}
-                  </h3>
-                  <p className="mt-1 text-xs text-charcoal/50">{mat.desc}</p>
-                </div>
-              </div>
-              <div className="mt-4 flex justify-center transition-transform group-hover:scale-110 group-hover:-translate-y-1">
+              <h3 className="font-mono text-sm font-semibold tracking-wide text-charcoal">
+                {mat.name}
+              </h3>
+              <p className="mt-1 text-xs text-charcoal/50">{mat.desc}</p>
+              <p className="mt-1 font-mono text-[10px] tracking-wide text-charcoal/35">
+                {mat.spec}
+              </p>
+              <div className="mt-4 flex justify-center">
                 <MaterialIcon type={mat.name} />
-              </div>
-              <div className="mt-4 flex items-center gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-                <span className="font-mono text-[10px] text-ocean">VIEW SPECS →</span>
               </div>
             </div>
           ))}

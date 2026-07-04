@@ -17,11 +17,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Blue Ocean Materials — Engineering Plastics, Delivered Smarter",
   description:
-    "Upload your CAD file and receive a quote in under 30 minutes. Precision-cut PEEK, Ultem, Delrin, PPS, PTFE and other advanced engineering materials.",
+    "Precision-cut engineering plastics with quotes in under 30 minutes. PEEK, Ultem, Delrin, PPS, PTFE and certified materials for aerospace, semiconductor, and industrial buyers.",
   openGraph: {
     title: "Blue Ocean Materials",
     description:
-      "Precision-cut high-performance engineering plastics through a modern digital experience.",
+      "Operational precision-cut engineering plastics and surface finishing for industrial buyers.",
     type: "website",
   },
 };

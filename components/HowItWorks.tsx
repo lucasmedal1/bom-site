@@ -1,9 +1,9 @@
 const steps = [
   {
     number: "1",
-    title: "Upload CAD",
-    label: "STEP",
-    details: ["DXF", "PDF"],
+    title: "Submit Specifications",
+    label: "INTAKE",
+    details: ["Dimensions", "Material", "Quantity"],
     icon: (
       <svg viewBox="0 0 64 64" className="h-16 w-16" aria-hidden>
         <rect x="12" y="8" width="40" height="48" fill="#FAFAF7" stroke="#0F6FFF" strokeWidth="1.5" rx="3" />
@@ -15,7 +15,7 @@ const steps = [
   {
     number: "2",
     title: "Receive Quote",
-    label: "STEP",
+    label: "QUOTING",
     details: ["Price", "Lead Time", "Material"],
     icon: (
       <svg viewBox="0 0 64 64" className="h-16 w-16" aria-hidden>
@@ -30,14 +30,14 @@ const steps = [
   {
     number: "3",
     title: "Receive Precision-Cut Material",
-    label: "STEP",
-    details: ["Ready for machining."],
+    label: "FULFILLMENT",
+    details: ["Certified", "Ready for machining"],
     icon: (
       <svg viewBox="0 0 64 64" className="h-16 w-16" aria-hidden>
         <polygon points="16,40 32,24 48,40 32,56" fill="#2CB5A5" opacity="0.2" />
         <polygon points="20,36 32,24 44,36 32,48" fill="#0F6FFF" opacity="0.15" stroke="#0F6FFF" strokeWidth="1" />
-        <line x1="32" y1="24" x2="32" y2="12" stroke="#2CB5A5" strokeWidth="1" className="animate-blink" />
-        <line x1="26" y1="18" x2="38" y2="18" stroke="#2CB5A5" strokeWidth="1" className="animate-blink" />
+        <line x1="32" y1="24" x2="32" y2="12" stroke="#2CB5A5" strokeWidth="1" />
+        <line x1="26" y1="18" x2="38" y2="18" stroke="#2CB5A5" strokeWidth="1" />
       </svg>
     ),
   },
@@ -46,25 +46,28 @@ const steps = [
 export default function HowItWorks() {
   return (
     <section id="how-it-works" className="relative py-24 lg:py-32 blueprint-grid-fine">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-ocean/[0.02] to-transparent" />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <p className="font-mono text-xs tracking-widest text-teal/80">
-            PROCESS
+            WORKFLOW
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-charcoal sm:text-4xl">
             How It Works
           </h2>
+          <p className="mt-4 text-charcoal/60">
+            From quote request to certified material delivery — a streamlined
+            production workflow.
+          </p>
         </div>
 
         <div className="mt-16 grid gap-8 lg:grid-cols-3 lg:gap-6">
           {steps.map((step, i) => (
             <div key={step.number} className="relative flex flex-col items-center text-center">
               {i < steps.length - 1 && (
-                <div className="absolute top-20 left-[calc(50%+80px)] hidden h-px w-[calc(100%-160px)] bg-gradient-to-r from-ocean/30 to-teal/30 lg:block" />
+                <div className="absolute top-20 left-[calc(50%+80px)] hidden h-px w-[calc(100%-160px)] bg-charcoal/10 lg:block" />
               )}
 
-              <div className="mb-4 font-mono text-4xl font-light text-ocean/20">
+              <div className="mb-4 font-mono text-4xl font-light text-charcoal/15">
                 {step.number}
               </div>
 
@@ -91,7 +94,7 @@ export default function HowItWorks() {
               </div>
 
               {i < steps.length - 1 && (
-                <div className="mt-6 text-charcoal/20 lg:hidden">↓</div>
+                <div className="mt-6 font-mono text-xs text-charcoal/20 lg:hidden">↓</div>
               )}
             </div>
           ))}

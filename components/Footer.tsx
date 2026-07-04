@@ -1,7 +1,7 @@
 const links = {
-  Products: ["PEEK", "Ultem", "Delrin", "PTFE", "All Materials"],
-  Industries: ["Semiconductors", "Medical", "Aerospace", "Robotics"],
-  Company: ["About", "Contact", "Careers"],
+  Products: ["PEEK", "Ultem", "Delrin", "PTFE", "Surface Finishing"],
+  Industries: ["Semiconductors", "Aerospace", "Medical", "Robotics"],
+  Company: ["About", "Contact"],
 };
 
 export default function Footer() {
@@ -14,7 +14,8 @@ export default function Footer() {
               Blue Ocean Materials
             </a>
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-charcoal/50">
-              The next generation digital infrastructure for engineering materials.
+              Precision-cut engineering plastics and surface finishing.
+              Operational supply for industrial buyers.
             </p>
             <div className="mt-6">
               <a
@@ -35,7 +36,16 @@ export default function Footer() {
                 {items.map((item) => (
                   <li key={item}>
                     <a
-                      href="#"
+                      href={
+                        item === "Surface Finishing"
+                          ? "#finishing"
+                          : item === "PEEK" ||
+                              item === "Ultem" ||
+                              item === "Delrin" ||
+                              item === "PTFE"
+                            ? "#materials"
+                            : "#"
+                      }
                       className="text-sm text-charcoal/60 transition-colors hover:text-charcoal"
                     >
                       {item}
@@ -51,12 +61,9 @@ export default function Footer() {
           <p className="font-mono text-[10px] text-charcoal/30">
             © {new Date().getFullYear()} Blue Ocean Materials. All rights reserved.
           </p>
-          <div className="flex items-center gap-1 opacity-30">
-            <div className="h-1 w-1 bg-ocean" />
-            <div className="h-1 w-1 bg-teal" />
-            <div className="h-1 w-1 bg-sunset" />
-            <div className="h-1 w-1 bg-coral" />
-          </div>
+          <p className="font-mono text-[10px] text-charcoal/30">
+            CERTIFIED · TRACEABLE · OPERATIONAL
+          </p>
         </div>
       </div>
     </footer>

@@ -5,6 +5,7 @@ import TrustBar from "@/components/TrustBar";
 import WhySection from "@/components/WhySection";
 import HowItWorks from "@/components/HowItWorks";
 import MaterialsGrid from "@/components/MaterialsGrid";
+import SurfaceFinishing from "@/components/SurfaceFinishing";
 import Industries from "@/components/Industries";
 import Differentiator from "@/components/Differentiator";
 import FinalCTA from "@/components/FinalCTA";
@@ -21,6 +22,7 @@ export default function Home() {
         <WhySection />
         <HowItWorks />
         <MaterialsGrid />
+        <SurfaceFinishing />
         <Industries />
         <Differentiator />
         <FinalCTA />

@@ -2,9 +2,9 @@ const features = [
   {
     title: "Buy Only What You Need",
     description: [
-      "No oversized inventory.",
-      "No unnecessary waste.",
-      "Just the exact blank required.",
+      "Precision-cut blanks sized to your job.",
+      "No excess inventory to carry.",
+      "Exact material allocation per order.",
     ],
     icon: (
       <svg viewBox="0 0 48 48" className="h-12 w-12" aria-hidden>
@@ -19,9 +19,9 @@ const features = [
   {
     title: "Quote in Under 30 Minutes",
     description: [
-      "No email chains.",
-      "No waiting days.",
-      "Fast engineering support.",
+      "Automated quoting workflow.",
+      "Confirmed lead time on every order.",
+      "Engineering support for material selection.",
     ],
     icon: (
       <svg viewBox="0 0 48 48" className="h-12 w-12" aria-hidden>
@@ -37,9 +37,9 @@ const features = [
   {
     title: "Material Certifications Included",
     description: [
-      "Traceability.",
-      "Documentation.",
-      "Industrial-grade quality.",
+      "Lot traceability on every shipment.",
+      "Mill certificates and documentation.",
+      "Industrial-grade quality standards.",
     ],
     icon: (
       <svg viewBox="0 0 48 48" className="h-12 w-12" aria-hidden>
@@ -57,26 +57,28 @@ const features = [
 export default function WhySection() {
   return (
     <section className="relative py-24 lg:py-32">
-      <div className="absolute inset-0 pixel-dots opacity-30" />
+      <div className="absolute inset-0 blueprint-grid-fine opacity-40" />
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <p className="font-mono text-xs tracking-widest text-ocean/60">
-            WHY BLUE OCEAN
+            CAPABILITIES
           </p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight text-charcoal sm:text-4xl">
-            Why Blue Ocean Materials?
+            Why Blue Ocean Materials
           </h2>
+          <p className="mt-4 text-charcoal/60">
+            Operational precision-cut supply for machine shops, aerospace
+            suppliers, and semiconductor manufacturers.
+          </p>
         </div>
 
         <div className="mt-16 grid gap-6 md:grid-cols-3">
           {features.map((feature) => (
             <div
               key={feature.title}
-              className={`group rounded-2xl border bg-white p-8 transition-all hover:shadow-lg hover:shadow-ocean/5 ${feature.accent}`}
+              className={`rounded-2xl border bg-white p-8 ${feature.accent}`}
             >
-              <div className="mb-6 transition-transform group-hover:scale-105">
-                {feature.icon}
-              </div>
+              <div className="mb-6">{feature.icon}</div>
               <h3 className="text-lg font-semibold tracking-tight text-charcoal">
                 {feature.title}
               </h3>

@@ -14,6 +14,12 @@ export default function Navbar() {
             Materials
           </a>
           <a
+            href="#finishing"
+            className="text-sm text-charcoal/60 transition-colors hover:text-charcoal"
+          >
+            Finishing
+          </a>
+          <a
             href="#industries"
             className="text-sm text-charcoal/60 transition-colors hover:text-charcoal"
           >
@@ -29,16 +35,10 @@ export default function Navbar() {
 
         <div className="flex items-center gap-3">
           <a
-            href="#quote"
-            className="hidden text-sm font-medium text-charcoal/70 transition-colors hover:text-charcoal sm:block"
+            href="mailto:lucas@blueoceanmaterials.com?subject=Quote%20Request"
+            className="rounded-lg bg-ocean px-4 py-2 text-sm font-medium text-white transition-all hover:bg-ocean/90"
           >
-            Request Quote
-          </a>
-          <a
-            href="#upload"
-            className="rounded-lg bg-ocean px-4 py-2 text-sm font-medium text-white transition-all hover:bg-ocean/90 hover:shadow-lg hover:shadow-ocean/20"
-          >
-            Upload CAD
+            Request a Quote
           </a>
         </div>
       </nav>

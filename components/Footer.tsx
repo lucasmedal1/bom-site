@@ -17,12 +17,18 @@ export default function Footer() {
               Precision-cut engineering plastics and surface finishing.
               Operational supply for industrial buyers.
             </p>
-            <div className="mt-6">
+            <div className="mt-6 space-y-2">
               <a
                 href="mailto:lucas@blueoceanmaterials.com"
-                className="font-mono text-xs text-charcoal/40 transition-colors hover:text-ocean"
+                className="block font-mono text-xs text-charcoal/40 transition-colors hover:text-ocean"
               >
                 lucas@blueoceanmaterials.com
+              </a>
+              <a
+                href="tel:+16506445101"
+                className="block font-mono text-xs text-charcoal/40 transition-colors hover:text-ocean"
+              >
+                (650) 644-5101
               </a>
             </div>
           </div>

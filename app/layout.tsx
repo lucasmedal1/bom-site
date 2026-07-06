@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Chakra_Petch, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import "./globals.css";
 
 const chakraPetch = Chakra_Petch({
@@ -59,6 +60,7 @@ export default function RootLayout({
       className={`${chakraPetch.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-off-white text-charcoal">
+        <GoogleAnalytics />
         {children}
       </body>
     </html>

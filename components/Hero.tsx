@@ -15,8 +15,8 @@ export default function Hero() {
         </h1>
 
         <p className="mt-6 text-lg leading-relaxed text-charcoal/70">
-          Receive a quote in under 30 minutes. Precision-cut PEEK, Ultem,
-          Delrin, and other engineering polymers.
+          Receive a quote in under 30 minutes. Precision-cut PEEK, PEI,
+          POM, Nylon, and other engineering polymers.
         </p>
 
         <div className="mt-6 flex justify-center">

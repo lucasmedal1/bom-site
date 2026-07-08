@@ -5,7 +5,7 @@ const signals = [
   "Aerospace + semiconductor compatible",
 ];
 
-const materials = ["PEEK", "Ultem®", "Delrin®", "PTFE", "PPS", "PVDF"];
+const materials = ["PEEK", "PEI", "POM", "Nylon"];
 
 export default function TrustBar() {
   return (

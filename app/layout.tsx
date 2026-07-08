@@ -28,14 +28,14 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.blueoceanmaterials.com"),
   title: "Blue Ocean Materials — Engineering Plastics, Delivered Smarter",
   description:
-    "Precision-cut PEEK, Ultem, Delrin & certified engineering plastics. Quotes in under 30 minutes for aerospace, semiconductor, and industrial buyers.",
+    "Precision-cut PEEK, PEI, POM & certified engineering plastics. Quotes in under 30 minutes for aerospace, semiconductor, and industrial buyers.",
   alternates: {
     canonical: "https://www.blueoceanmaterials.com",
   },
   openGraph: {
     title: "Blue Ocean Materials — Engineering Plastics",
     description:
-      "Precision-cut PEEK, Ultem, Delrin & certified engineering plastics. Quotes in under 30 minutes.",
+      "Precision-cut PEEK, PEI, POM & certified engineering plastics. Quotes in under 30 minutes.",
     url: "https://www.blueoceanmaterials.com",
     siteName: "Blue Ocean Materials",
     type: "website",

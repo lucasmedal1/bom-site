@@ -90,7 +90,7 @@ export default async function Image() {
               color: "rgba(17,17,17,0.65)",
             }}
           >
-            Precision-cut PEEK, Ultem, Delrin & certified polymers. Quotes in
+            Precision-cut PEEK, PEI, POM & certified polymers. Quotes in
             under 30 minutes.
           </div>
         </div>

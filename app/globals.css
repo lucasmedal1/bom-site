@@ -123,6 +123,35 @@ body {
   border-color: var(--ocean-blue);
 }
 
+.field-invalid {
+  border-color: var(--coral);
+}
+
+.field-error {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--coral);
+}
+
+.form-error-summary {
+  border: 1px solid color-mix(in srgb, var(--coral) 25%, transparent);
+  background: color-mix(in srgb, var(--coral) 6%, transparent);
+  padding: 0.875rem 1rem;
+}
+
+.form-error-summary p {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--coral);
+}
+
+.form-error-summary ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+  font-size: 0.8125rem;
+  color: color-mix(in srgb, var(--coral) 85%, transparent);
+}
+
 .field-textarea {
   min-height: 6rem;
   resize: vertical;

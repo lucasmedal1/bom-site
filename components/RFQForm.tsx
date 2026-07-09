@@ -62,6 +62,137 @@ function formatQuoteMaterial(m: QuoteMaterial) {
   return formatMaterial(material);
 }
 
+type FormErrors = Partial<Record<
+  | "materials"
+  | "exportConfirm"
+  | "consent"
+  | "firstName"
+  | "lastName"
+  | "customerType"
+  | "company"
+  | "email"
+  | "phone"
+  | "address"
+  | "city"
+  | "state"
+  | "zip",
+  string
+>>;
+
+type MaterialErrors = Partial<Record<
+  | "materialName"
+  | "cadFile"
+  | "thickness"
+  | "width"
+  | "length"
+  | "diameter"
+  | "outsideDiameter"
+  | "insideDiameter"
+  | "pieces",
+  string
+>>;
+
+function FieldError({ message }: { message?: string }) {
+  if (!message) return null;
+  return <p className="field-error">{message}</p>;
+}
+
+function fieldClass(hasError: boolean) {
+  return hasError ? "field-input field-invalid" : "field-input";
+}
+
+function selectClass(hasError: boolean) {
+  return hasError ? "field-select field-invalid" : "field-select";
+}
+
+function isValidEmail(value: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+}
+
+function validateMaterialDraft(draft: Omit<QuoteMaterial, "id">): MaterialErrors {
+  const errors: MaterialErrors = {};
+
+  if (!draft.materialName.trim()) {
+    errors.materialName = "Material name is required.";
+  }
+
+  if (draft.dimensionMode === "cad" && !draft.cadFileName) {
+    errors.cadFile = "Upload a CAD file or switch to manual dimensions.";
+  }
+
+  if (draft.dimensionMode === "manual" && draft.shape !== "other") {
+    if (!draft.pieces.trim()) {
+      errors.pieces = "Number of pieces is required.";
+    }
+
+    if (draft.shape === "sheet") {
+      if (!draft.thickness.trim()) errors.thickness = "Thickness is required.";
+      if (!draft.width.trim()) errors.width = "Width is required.";
+      if (!draft.length.trim()) errors.length = "Length is required.";
+    }
+
+    if (draft.shape === "rod") {
+      if (!draft.diameter.trim()) errors.diameter = "Diameter is required.";
+      if (!draft.length.trim()) errors.length = "Length is required.";
+    }
+
+    if (draft.shape === "tube") {
+      if (!draft.outsideDiameter.trim()) errors.outsideDiameter = "Outside diameter is required.";
+      if (!draft.insideDiameter.trim()) errors.insideDiameter = "Inside diameter is required.";
+      if (!draft.length.trim()) errors.length = "Length is required.";
+    }
+  }
+
+  return errors;
+}
+
+function validateSubmission(values: {
+  materials: QuoteMaterial[];
+  exportConfirm: boolean;
+  consent: boolean;
+  firstName: string;
+  lastName: string;
+  customerType: string;
+  company: string;
+  email: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+}): FormErrors {
+  const errors: FormErrors = {};
+
+  if (values.materials.length === 0) {
+    errors.materials = "Add at least one material to your quote.";
+  }
+
+  if (!values.exportConfirm) {
+    errors.exportConfirm = "Confirm your export control statement before submitting.";
+  }
+
+  if (!values.firstName.trim()) errors.firstName = "First name is required.";
+  if (!values.lastName.trim()) errors.lastName = "Last name is required.";
+  if (!values.customerType) errors.customerType = "Select a customer type.";
+  if (!values.company.trim()) errors.company = "Company is required.";
+  if (!values.email.trim()) {
+    errors.email = "Email address is required.";
+  } else if (!isValidEmail(values.email)) {
+    errors.email = "Enter a valid email address.";
+  }
+  if (!values.phone.trim()) errors.phone = "Phone number is required.";
+  if (!values.address.trim()) errors.address = "Address is required.";
+  if (!values.city.trim()) errors.city = "City is required.";
+  if (!values.state) errors.state = "Select a state or region.";
+  if (!values.zip.trim()) errors.zip = "Zip or postal code is required.";
+
+  if (!values.consent) {
+    errors.consent = "Accept the Terms of Use and Privacy Policy to continue.";
+  }
+
+  return errors;
+}
+
 export default function RFQForm() {
   const [materials, setMaterials] = useState<QuoteMaterial[]>([]);
   const [showMaterialForm, setShowMaterialForm] = useState(false);
@@ -72,6 +203,8 @@ export default function RFQForm() {
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
+  const [materialErrors, setMaterialErrors] = useState<MaterialErrors>({});
 
   const [quoteRef, setQuoteRef] = useState("");
   const [application, setApplication] = useState("");
@@ -89,6 +222,21 @@ export default function RFQForm() {
 
   const updateDraft = (field: keyof ReturnType<typeof emptyDraft>, value: string) => {
     setDraft((d) => ({ ...d, [field]: value }));
+    setMaterialErrors((errors) => {
+      if (!errors[field as keyof MaterialErrors]) return errors;
+      const next = { ...errors };
+      delete next[field as keyof MaterialErrors];
+      return next;
+    });
+  };
+
+  const clearFormError = (field: keyof FormErrors) => {
+    setFormErrors((errors) => {
+      if (!errors[field]) return errors;
+      const next = { ...errors };
+      delete next[field];
+      return next;
+    });
   };
 
   const setShape = (shape: Shape) => {
@@ -107,16 +255,27 @@ export default function RFQForm() {
     setDraftCadFile(file);
     updateDraft("cadFileName", file.name);
     setFiles((prev) => [...prev, file]);
+    setMaterialErrors((errors) => {
+      if (!errors.cadFile) return errors;
+      const next = { ...errors };
+      delete next.cadFile;
+      return next;
+    });
   };
 
   const addMaterial = () => {
-    if (!draft.materialName.trim()) return;
-    if (draft.dimensionMode === "cad" && !draft.cadFileName) return;
+    const errors = validateMaterialDraft(draft);
+    if (Object.keys(errors).length > 0) {
+      setMaterialErrors(errors);
+      return;
+    }
 
+    setMaterialErrors({});
     setMaterials((m) => [...m, { ...draft, id: crypto.randomUUID() }]);
     setDraft(emptyDraft());
     setDraftCadFile(null);
     setShowMaterialForm(false);
+    clearFormError("materials");
   };
 
   const removeMaterial = (id: string) => {
@@ -130,8 +289,43 @@ export default function RFQForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!consent || !exportConfirm || submitting) return;
+    if (submitting) return;
 
+    const errors = validateSubmission({
+      materials,
+      exportConfirm,
+      consent,
+      firstName,
+      lastName,
+      customerType,
+      company,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zip,
+    });
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      setSubmitError("");
+
+      const contactFields: (keyof FormErrors)[] = [
+        "firstName", "lastName", "customerType", "company", "email", "phone", "address", "city", "state", "zip",
+      ];
+      const scrollTarget = errors.materials
+        ? "rfq-materials"
+        : contactFields.some((field) => errors[field])
+          ? "rfq-contact"
+          : "rfq-submit";
+
+      if (errors.materials) setShowMaterialForm(true);
+      document.getElementById(scrollTarget)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+
+    setFormErrors({});
     setSubmitting(true);
     setSubmitError("");
 
@@ -179,6 +373,7 @@ export default function RFQForm() {
 
   const showDimensionFields = draft.dimensionMode === "manual" && draft.shape !== "other";
   const showCadUpload = draft.dimensionMode === "cad";
+  const formErrorList = Object.values(formErrors);
 
   if (submitted) {
     return (
@@ -200,7 +395,7 @@ export default function RFQForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="mx-auto max-w-3xl px-6 pb-24 lg:px-8">
+    <form onSubmit={handleSubmit} noValidate className="mx-auto max-w-3xl px-6 pb-24 lg:px-8">
       <div className="mb-10">
         <p className="font-mono text-xs tracking-widest text-ocean/60">RFQ</p>
         <h1 className="mt-2 text-4xl font-semibold tracking-tight text-charcoal">
@@ -212,7 +407,7 @@ export default function RFQForm() {
         </p>
       </div>
 
-      <section className="border border-charcoal/10 bg-white p-6">
+      <section id="rfq-materials" className="border border-charcoal/10 bg-white p-6">
         <h2 className="text-lg font-semibold text-charcoal">Included Quote Materials</h2>
 
         {materials.length > 0 ? (
@@ -239,11 +434,15 @@ export default function RFQForm() {
         ) : (
           <p className="mt-4 text-sm text-charcoal/50">No materials added yet.</p>
         )}
+        <FieldError message={formErrors.materials} />
 
         {!showMaterialForm && (
           <button
             type="button"
-            onClick={() => setShowMaterialForm(true)}
+            onClick={() => {
+              setShowMaterialForm(true);
+              clearFormError("materials");
+            }}
             className="btn btn-secondary mt-4 px-4 py-2 text-xs"
           >
             + Add Another Material
@@ -276,12 +475,12 @@ export default function RFQForm() {
             <div className="sm:col-span-2">
               <label className="field-label">Material Name *</label>
               <input
-                required
-                className="field-input"
+                className={fieldClass(!!materialErrors.materialName)}
                 placeholder="e.g. PEEK, PEI, POM, Nylon, G10"
                 value={draft.materialName}
                 onChange={(e) => updateDraft("materialName", e.target.value)}
               />
+              <FieldError message={materialErrors.materialName} />
             </div>
 
             {draft.shape !== "other" && (
@@ -324,7 +523,9 @@ export default function RFQForm() {
                 <label className="field-label">
                   Upload CAD File {draft.dimensionMode === "cad" ? "*" : ""}
                 </label>
-                <div className="mt-2 border border-dashed border-ocean/30 bg-ocean/5 p-6 text-center">
+                <div className={`mt-2 border border-dashed bg-ocean/5 p-6 text-center ${
+                  materialErrors.cadFile ? "border-coral/40" : "border-ocean/30"
+                }`}>
                   <p className="text-sm text-charcoal/60">
                     DXF, STEP, STP, PDF — we&apos;ll extract dimensions
                   </p>
@@ -343,6 +544,7 @@ export default function RFQForm() {
                     </p>
                   )}
                 </div>
+                <FieldError message={materialErrors.cadFile} />
               </div>
             )}
 
@@ -350,15 +552,18 @@ export default function RFQForm() {
               <>
                 <div>
                   <label className="field-label">Thickness *</label>
-                  <input className="field-input" value={draft.thickness} onChange={(e) => updateDraft("thickness", e.target.value)} />
+                  <input className={fieldClass(!!materialErrors.thickness)} value={draft.thickness} onChange={(e) => updateDraft("thickness", e.target.value)} />
+                  <FieldError message={materialErrors.thickness} />
                 </div>
                 <div>
                   <label className="field-label">Width *</label>
-                  <input className="field-input" value={draft.width} onChange={(e) => updateDraft("width", e.target.value)} />
+                  <input className={fieldClass(!!materialErrors.width)} value={draft.width} onChange={(e) => updateDraft("width", e.target.value)} />
+                  <FieldError message={materialErrors.width} />
                 </div>
                 <div>
                   <label className="field-label">Length *</label>
-                  <input className="field-input" value={draft.length} onChange={(e) => updateDraft("length", e.target.value)} />
+                  <input className={fieldClass(!!materialErrors.length)} value={draft.length} onChange={(e) => updateDraft("length", e.target.value)} />
+                  <FieldError message={materialErrors.length} />
                 </div>
               </>
             )}
@@ -367,11 +572,13 @@ export default function RFQForm() {
               <>
                 <div>
                   <label className="field-label">Diameter *</label>
-                  <input className="field-input" value={draft.diameter} onChange={(e) => updateDraft("diameter", e.target.value)} />
+                  <input className={fieldClass(!!materialErrors.diameter)} value={draft.diameter} onChange={(e) => updateDraft("diameter", e.target.value)} />
+                  <FieldError message={materialErrors.diameter} />
                 </div>
                 <div>
                   <label className="field-label">Length *</label>
-                  <input className="field-input" value={draft.length} onChange={(e) => updateDraft("length", e.target.value)} />
+                  <input className={fieldClass(!!materialErrors.length)} value={draft.length} onChange={(e) => updateDraft("length", e.target.value)} />
+                  <FieldError message={materialErrors.length} />
                 </div>
               </>
             )}
@@ -380,15 +587,18 @@ export default function RFQForm() {
               <>
                 <div>
                   <label className="field-label">Outside Diameter *</label>
-                  <input className="field-input" value={draft.outsideDiameter} onChange={(e) => updateDraft("outsideDiameter", e.target.value)} />
+                  <input className={fieldClass(!!materialErrors.outsideDiameter)} value={draft.outsideDiameter} onChange={(e) => updateDraft("outsideDiameter", e.target.value)} />
+                  <FieldError message={materialErrors.outsideDiameter} />
                 </div>
                 <div>
                   <label className="field-label">Inside Diameter *</label>
-                  <input className="field-input" value={draft.insideDiameter} onChange={(e) => updateDraft("insideDiameter", e.target.value)} />
+                  <input className={fieldClass(!!materialErrors.insideDiameter)} value={draft.insideDiameter} onChange={(e) => updateDraft("insideDiameter", e.target.value)} />
+                  <FieldError message={materialErrors.insideDiameter} />
                 </div>
                 <div>
                   <label className="field-label">Length *</label>
-                  <input className="field-input" value={draft.length} onChange={(e) => updateDraft("length", e.target.value)} />
+                  <input className={fieldClass(!!materialErrors.length)} value={draft.length} onChange={(e) => updateDraft("length", e.target.value)} />
+                  <FieldError message={materialErrors.length} />
                 </div>
               </>
             )}
@@ -418,7 +628,8 @@ export default function RFQForm() {
               <>
                 <div>
                   <label className="field-label"># of Pieces *</label>
-                  <input className="field-input" value={draft.pieces} onChange={(e) => updateDraft("pieces", e.target.value)} />
+                  <input className={fieldClass(!!materialErrors.pieces)} value={draft.pieces} onChange={(e) => updateDraft("pieces", e.target.value)} />
+                  <FieldError message={materialErrors.pieces} />
                 </div>
                 <div>
                   <label className="field-label">Unit of Measure</label>
@@ -452,6 +663,7 @@ export default function RFQForm() {
                 setShowMaterialForm(false);
                 setDraft(emptyDraft());
                 setDraftCadFile(null);
+                setMaterialErrors({});
               }}
               className="btn btn-secondary px-5 py-2.5 text-xs"
             >
@@ -496,13 +708,16 @@ export default function RFQForm() {
         <label className="mt-4 flex cursor-pointer items-start gap-3 text-sm text-charcoal/60">
           <input
             type="checkbox"
-            required
             checked={exportConfirm}
-            onChange={(e) => setExportConfirm(e.target.checked)}
+            onChange={(e) => {
+              setExportConfirm(e.target.checked);
+              clearFormError("exportConfirm");
+            }}
             className="mt-0.5 accent-ocean"
           />
           I confirm that I did not upload any documents controlled by U.S. Export Control Law.
         </label>
+        <FieldError message={formErrors.exportConfirm} />
       </section>
 
       <section className="form-section">
@@ -520,76 +735,88 @@ export default function RFQForm() {
         />
       </section>
 
-      <section className="form-section">
+      <section id="rfq-contact" className="form-section">
         <h2 className="text-lg font-semibold text-charcoal">Provide Your Contact Information</h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           <div>
             <label className="field-label">First Name *</label>
-            <input required className="field-input" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+            <input className={fieldClass(!!formErrors.firstName)} value={firstName} onChange={(e) => { setFirstName(e.target.value); clearFormError("firstName"); }} />
+            <FieldError message={formErrors.firstName} />
           </div>
           <div>
             <label className="field-label">Last Name *</label>
-            <input required className="field-input" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+            <input className={fieldClass(!!formErrors.lastName)} value={lastName} onChange={(e) => { setLastName(e.target.value); clearFormError("lastName"); }} />
+            <FieldError message={formErrors.lastName} />
           </div>
           <div>
             <label className="field-label">Customer Type *</label>
-            <select required className="field-select" value={customerType} onChange={(e) => setCustomerType(e.target.value)}>
+            <select className={selectClass(!!formErrors.customerType)} value={customerType} onChange={(e) => { setCustomerType(e.target.value); clearFormError("customerType"); }}>
               <option value="">—</option>
               <option value="Commercial/Business">Commercial / Business</option>
               <option value="Residential">Residential</option>
               <option value="University/School">University / School</option>
               <option value="Non-profit">Non-profit</option>
             </select>
+            <FieldError message={formErrors.customerType} />
           </div>
           <div>
             <label className="field-label">Company *</label>
-            <input required className="field-input" value={company} onChange={(e) => setCompany(e.target.value)} />
+            <input className={fieldClass(!!formErrors.company)} value={company} onChange={(e) => { setCompany(e.target.value); clearFormError("company"); }} />
+            <FieldError message={formErrors.company} />
           </div>
           <div>
             <label className="field-label">Email Address *</label>
-            <input required type="email" className="field-input" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <input type="email" className={fieldClass(!!formErrors.email)} value={email} onChange={(e) => { setEmail(e.target.value); clearFormError("email"); }} />
+            <FieldError message={formErrors.email} />
           </div>
           <div>
             <label className="field-label">Phone *</label>
-            <input required type="tel" className="field-input" value={phone} onChange={(e) => setPhone(e.target.value)} />
+            <input type="tel" className={fieldClass(!!formErrors.phone)} value={phone} onChange={(e) => { setPhone(e.target.value); clearFormError("phone"); }} />
+            <FieldError message={formErrors.phone} />
           </div>
           <div className="sm:col-span-2">
             <label className="field-label">Address *</label>
-            <input required className="field-input" value={address} onChange={(e) => setAddress(e.target.value)} />
+            <input className={fieldClass(!!formErrors.address)} value={address} onChange={(e) => { setAddress(e.target.value); clearFormError("address"); }} />
+            <FieldError message={formErrors.address} />
           </div>
           <div>
             <label className="field-label">City *</label>
-            <input required className="field-input" value={city} onChange={(e) => setCity(e.target.value)} />
+            <input className={fieldClass(!!formErrors.city)} value={city} onChange={(e) => { setCity(e.target.value); clearFormError("city"); }} />
+            <FieldError message={formErrors.city} />
           </div>
           <div>
             <label className="field-label">State / Region *</label>
-            <select required className="field-select" value={state} onChange={(e) => setState(e.target.value)}>
+            <select className={selectClass(!!formErrors.state)} value={state} onChange={(e) => { setState(e.target.value); clearFormError("state"); }}>
               <option value="">—</option>
               {US_STATES.map((s) => (
                 <option key={s} value={s}>{s}</option>
               ))}
             </select>
+            <FieldError message={formErrors.state} />
           </div>
           <div>
             <label className="field-label">Zip / Postal Code *</label>
-            <input required className="field-input" value={zip} onChange={(e) => setZip(e.target.value)} />
+            <input className={fieldClass(!!formErrors.zip)} value={zip} onChange={(e) => { setZip(e.target.value); clearFormError("zip"); }} />
+            <FieldError message={formErrors.zip} />
           </div>
           <div>
             <label className="field-label">Country *</label>
-            <select required className="field-select" defaultValue="United States">
+            <select className="field-select" defaultValue="United States">
               <option value="United States">United States</option>
             </select>
           </div>
         </div>
       </section>
 
-      <section className="form-section">
+      <section id="rfq-submit" className="form-section">
         <label className="flex cursor-pointer items-start gap-3 text-sm text-charcoal/60">
           <input
             type="checkbox"
-            required
             checked={consent}
-            onChange={(e) => setConsent(e.target.checked)}
+            onChange={(e) => {
+              setConsent(e.target.checked);
+              clearFormError("consent");
+            }}
             className="mt-0.5 accent-ocean"
           />
           <span>
@@ -597,6 +824,18 @@ export default function RFQForm() {
             expire 30 days after issue unless otherwise specified.
           </span>
         </label>
+        <FieldError message={formErrors.consent} />
+
+        {formErrorList.length > 0 && (
+          <div className="form-error-summary mt-4">
+            <p>Please complete the required fields before submitting.</p>
+            <ul>
+              {formErrorList.map((message) => (
+                <li key={message}>{message}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {submitError && (
           <p className="mt-4 border border-coral/20 bg-coral/5 px-4 py-3 text-sm text-coral">

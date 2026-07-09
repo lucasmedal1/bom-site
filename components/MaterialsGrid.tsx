@@ -76,18 +76,13 @@ function MaterialCard({ material }: { material: Material }) {
       </div>
 
       <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <h3 className="font-display text-lg font-semibold tracking-wide text-charcoal">
-              {material.name}
-            </h3>
-            <p className="mt-0.5 font-mono text-[10px] tracking-wide text-charcoal/45">
-              {material.chemical}
-            </p>
-          </div>
-          <span className="shrink-0 border border-teal/20 bg-teal/5 px-2 py-1 font-mono text-[9px] tracking-wider text-teal">
-            IN STOCK
-          </span>
+        <div>
+          <h3 className="font-display text-lg font-semibold tracking-wide text-charcoal">
+            {material.name}
+          </h3>
+          <p className="mt-0.5 font-mono text-[10px] tracking-wide text-charcoal/45">
+            {material.chemical}
+          </p>
         </div>
 
         <p className="mt-3 flex-1 text-sm leading-relaxed text-charcoal/65">
@@ -125,7 +120,7 @@ export default function MaterialsGrid() {
             Engineering Polymers
           </h2>
           <p className="mt-4 text-charcoal/60">
-            Certified materials in standard stock forms — sheet, rod, and tube.
+            Certified materials in standard stock forms — sheet, rod, tube, and blocks.
             Precision-cut to your specification and ready for immediate quoting.
           </p>
         </div>

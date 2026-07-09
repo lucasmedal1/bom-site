@@ -277,7 +277,7 @@ export default function RFQForm() {
               <input
                 required
                 className="field-input"
-                placeholder="e.g. PEEK, PEI, POM, Nylon"
+                placeholder="e.g. PEEK, PEI, POM, Nylon, G10"
                 value={draft.materialName}
                 onChange={(e) => updateDraft("materialName", e.target.value)}
               />

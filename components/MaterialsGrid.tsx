@@ -47,6 +47,15 @@ const materials: Material[] = [
     image: "/nylon_img.jpg",
     accent: "#FF6B5B",
   },
+  {
+    name: "G10",
+    chemical: "Epoxy fiberglass laminate (FR-4)",
+    desc: "High-strength electrical insulation with excellent dimensional stability.",
+    spec: "Electronics · Aerospace · Industrial",
+    forms: ["Sheet"],
+    image: "/g10-img.jpg",
+    accent: "#7FDBCA",
+  },
 ];
 
 function MaterialCard({ material }: { material: Material }) {
@@ -121,7 +130,7 @@ export default function MaterialsGrid() {
           </p>
         </div>
 
-        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {materials.map((material) => (
             <MaterialCard key={material.name} material={material} />
           ))}

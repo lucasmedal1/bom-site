@@ -1,7 +1,7 @@
 import Logo from "@/components/Logo";
 
 const links = {
-  Products: ["PEEK", "PEI", "POM", "Nylon"],
+  Products: ["PEEK", "PEI", "POM", "Nylon", "G10"],
   Industries: ["Semiconductors", "Aerospace", "Medical", "Robotics"],
   Company: ["About", "Contact"],
 };
@@ -51,7 +51,8 @@ export default function Footer() {
                         item === "PEEK" ||
                         item === "PEI" ||
                         item === "POM" ||
-                        item === "Nylon"
+                        item === "Nylon" ||
+                        item === "G10"
                           ? "#materials"
                           : "#"
                       }

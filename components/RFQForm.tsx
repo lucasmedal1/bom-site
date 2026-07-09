@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { formatMaterial } from "@/lib/rfq-email";
 
 type Shape = "sheet" | "rod" | "tube" | "fabricated" | "other";
 type DimensionMode = "manual" | "cad";
@@ -56,25 +57,9 @@ const emptyDraft = (): Omit<QuoteMaterial, "id"> => ({
   cadFileName: "",
 });
 
-function formatMaterial(m: QuoteMaterial) {
-  const parts = [SHAPE_LABELS[m.shape], m.materialName];
-
-  if (m.dimensionMode === "cad") {
-    parts.push(m.cadFileName ? `CAD: ${m.cadFileName}` : "CAD upload — blank size TBD");
-  } else if (m.shape === "sheet") {
-    parts.push(`${m.thickness}×${m.width}×${m.length} ${m.unit}`);
-  } else if (m.shape === "rod") {
-    parts.push(`Ø${m.diameter} × ${m.length} ${m.unit}`);
-  } else if (m.shape === "tube") {
-    parts.push(`OD${m.outsideDiameter} ID${m.insideDiameter} × ${m.length} ${m.unit}`);
-  } else if (m.shape === "fabricated") {
-    const dims = [m.length, m.width, m.height, m.thickness].filter(Boolean);
-    if (dims.length) parts.push(`${dims.join(" × ")} ${m.unit}`);
-  }
-
-  if (m.pieces) parts.push(`${m.pieces} pcs`);
-  if (m.details) parts.push(m.details);
-  return parts.filter(Boolean).join(" · ");
+function formatQuoteMaterial(m: QuoteMaterial) {
+  const { id: _id, ...material } = m;
+  return formatMaterial(material);
 }
 
 export default function RFQForm() {
@@ -85,6 +70,8 @@ export default function RFQForm() {
   const [files, setFiles] = useState<File[]>([]);
   const [exportConfirm, setExportConfirm] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const [quoteRef, setQuoteRef] = useState("");
   const [application, setApplication] = useState("");
@@ -141,39 +128,53 @@ export default function RFQForm() {
     setFiles((prev) => [...prev, ...Array.from(incoming)]);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!consent || !exportConfirm) return;
+    if (!consent || !exportConfirm || submitting) return;
 
-    const body = [
-      "QUOTE REQUEST — Blue Ocean Materials",
-      "",
-      quoteRef && `Reference: ${quoteRef}`,
-      "",
-      "MATERIALS:",
-      ...materials.map((m, i) => `${i + 1}. ${formatMaterial(m)}`),
-      materials.length === 0 && "(none listed)",
-      "",
-      files.length > 0 && `Files to attach: ${files.map((f) => f.name).join(", ")}`,
-      "",
-      application && `Application:\n${application}`,
-      "",
-      "CONTACT:",
-      `${firstName} ${lastName}`,
-      company && `Company: ${company}`,
-      customerType && `Type: ${customerType}`,
-      `Email: ${email}`,
-      `Phone: ${phone}`,
-      `${address}, ${city}, ${state} ${zip}`,
-    ]
-      .filter(Boolean)
-      .join("\n");
+    setSubmitting(true);
+    setSubmitError("");
 
-    window.location.href = `mailto:lucas@blueoceanmaterials.com?subject=${encodeURIComponent(
-      quoteRef ? `RFQ: ${quoteRef}` : "RFQ Request"
-    )}&body=${encodeURIComponent(body)}`;
+    const payload = {
+      quoteRef,
+      application,
+      firstName,
+      lastName,
+      customerType,
+      company,
+      email,
+      phone,
+      address,
+      city,
+      state,
+      zip,
+      materials: materials.map(({ id: _id, ...material }) => material),
+    };
 
-    setSubmitted(true);
+    const formData = new FormData();
+    formData.append("payload", JSON.stringify(payload));
+    files.forEach((file) => formData.append("files", file));
+
+    try {
+      const response = await fetch("/api/rfq", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error ?? "Failed to submit quote request.");
+      }
+
+      setSubmitted(true);
+    } catch (error) {
+      setSubmitError(
+        error instanceof Error ? error.message : "Failed to submit quote request."
+      );
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const showDimensionFields = draft.dimensionMode === "manual" && draft.shape !== "other";
@@ -184,12 +185,12 @@ export default function RFQForm() {
       <div className="mx-auto max-w-2xl px-6 py-24 text-center lg:px-8">
         <h2 className="text-3xl font-semibold text-charcoal">Quote Submitted</h2>
         <p className="mt-4 text-charcoal/60">
-          Thank you for your request. Your email client should open with your
-          quote details — attach any CAD or drawing files and send to complete
-          your submission.
+          Thank you for your request. We&apos;ve received your quote details
+          and any uploaded files. A representative will respond within 30
+          minutes during business hours.
         </p>
         <p className="mt-4 font-mono text-xs text-charcoal/40">
-          A representative will respond within 30 minutes during business hours.
+          A confirmation has been sent to our team.
         </p>
         <a href="/" className="btn btn-primary mt-8 px-6 py-3 text-sm">
           Return Home
@@ -223,7 +224,7 @@ export default function RFQForm() {
               >
                 <div>
                   <p className="font-mono text-xs text-teal">{SHAPE_LABELS[m.shape]}</p>
-                  <p className="mt-1 text-sm text-charcoal">{formatMaterial(m)}</p>
+                  <p className="mt-1 text-sm text-charcoal">{formatQuoteMaterial(m)}</p>
                 </div>
                 <button
                   type="button"
@@ -482,7 +483,7 @@ export default function RFQForm() {
             />
           </label>
           <p className="mt-3 font-mono text-[10px] text-charcoal/40">
-            PDF, DXF, STEP, DWG, JPG, XLS · Max 10 MB per file
+            PDF, DXF, STEP, DWG, JPG, XLS · Max 4 MB per file
           </p>
         </div>
         {files.length > 0 && (
@@ -597,8 +598,18 @@ export default function RFQForm() {
           </span>
         </label>
 
-        <button type="submit" className="btn btn-primary mt-8 w-full px-8 py-4 text-sm sm:w-auto">
-          Submit My Quote
+        {submitError && (
+          <p className="mt-4 border border-coral/20 bg-coral/5 px-4 py-3 text-sm text-coral">
+            {submitError}
+          </p>
+        )}
+
+        <button
+          type="submit"
+          disabled={submitting}
+          className="btn btn-primary mt-8 w-full px-8 py-4 text-sm disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+        >
+          {submitting ? "Submitting..." : "Submit My Quote"}
         </button>
       </section>
     </form>

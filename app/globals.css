@@ -275,3 +275,108 @@ body {
   outline: 2px solid var(--ocean-blue);
   outline-offset: 2px;
 }
+
+/* Blog markdown prose */
+.blog-prose {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--charcoal) 78%, transparent);
+}
+
+.blog-prose > :first-child {
+  margin-top: 0;
+}
+
+.blog-prose h1 {
+  display: none;
+}
+
+.blog-prose h2 {
+  margin: 2.75rem 0 1rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--charcoal);
+}
+
+.blog-prose h3 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--charcoal);
+}
+
+.blog-prose p {
+  margin: 1rem 0;
+}
+
+.blog-prose a {
+  color: var(--ocean-blue);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.blog-prose strong {
+  font-weight: 600;
+  color: var(--charcoal);
+}
+
+.blog-prose ul,
+.blog-prose ol {
+  margin: 1rem 0;
+  padding-left: 1.25rem;
+}
+
+.blog-prose li {
+  margin: 0.4rem 0;
+}
+
+.blog-prose ul {
+  list-style: disc;
+}
+
+.blog-prose ol {
+  list-style: decimal;
+}
+
+.blog-prose hr {
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 1px solid color-mix(in srgb, var(--charcoal) 10%, transparent);
+}
+
+.blog-prose table {
+  width: 100%;
+  margin: 1.5rem 0;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.blog-prose th,
+.blog-prose td {
+  border: 1px solid color-mix(in srgb, var(--charcoal) 12%, transparent);
+  padding: 0.65rem 0.85rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.blog-prose th {
+  background: color-mix(in srgb, var(--ocean-blue) 6%, white);
+  font-family: var(--font-chakra), system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+}
+
+.blog-prose tbody tr:nth-child(even) {
+  background: color-mix(in srgb, var(--charcoal) 2%, transparent);
+}
+
+.blog-prose blockquote {
+  margin: 1.5rem 0;
+  border-left: 3px solid var(--ocean-blue);
+  padding-left: 1rem;
+  color: color-mix(in srgb, var(--charcoal) 65%, transparent);
+}

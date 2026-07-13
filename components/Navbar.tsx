@@ -21,6 +21,9 @@ export default function Navbar() {
           <a href="/#how-it-works" className="text-sm text-charcoal/60 transition-colors hover:text-charcoal">
             How It Works
           </a>
+          <a href="/blog" className="text-sm text-charcoal/60 transition-colors hover:text-charcoal">
+            Blog
+          </a>
         </div>
 
         <div className="flex items-center gap-3">

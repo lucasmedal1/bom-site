@@ -3,7 +3,7 @@ import Logo from "@/components/Logo";
 const links = {
   Products: ["PEEK", "PEI", "POM", "Nylon", "G10"],
   Industries: ["Semiconductors", "Aerospace", "Medical", "Robotics"],
-  Company: ["About", "Contact"],
+  Company: ["Blog", "About", "Contact"],
 };
 
 export default function Footer() {
@@ -53,8 +53,10 @@ export default function Footer() {
                         item === "POM" ||
                         item === "Nylon" ||
                         item === "G10"
-                          ? "#materials"
-                          : "#"
+                          ? "/#materials"
+                          : item === "Blog"
+                            ? "/blog"
+                            : "#"
                       }
                       className="text-sm text-charcoal/60 transition-colors hover:text-charcoal"
                     >

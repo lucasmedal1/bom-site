@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Request a Quote — Blue Ocean Materials",
   description:
-    "Submit an RFQ for precision-cut engineering plastics. Add materials, upload specifications, and receive a quote in under 30 minutes.",
+    "Submit an RFQ for precision-cut engineering plastics. Add materials, upload specifications, and get a response from our team — with quoting built for under-30-minute turnaround as we scale.",
 };
 
 export default function RFQPage() {

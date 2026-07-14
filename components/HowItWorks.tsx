@@ -23,7 +23,7 @@ const steps = [
         <text x="32" y="34" textAnchor="middle" fontSize="10" fill="#0F6FFF" fontFamily="monospace" fontWeight="bold">$</text>
         <line x1="16" y1="42" x2="48" y2="42" stroke="#111" strokeWidth="0.8" opacity="0.15" />
         <rect x="40" y="12" width="16" height="10" fill="#FF8C42" opacity="0.3" rx="2" />
-        <text x="48" y="19" textAnchor="middle" fontSize="5" fill="#111" fontFamily="monospace">&lt;30m</text>
+        <text x="48" y="19" textAnchor="middle" fontSize="5" fill="#111" fontFamily="monospace">FAST</text>
       </svg>
     ),
   },

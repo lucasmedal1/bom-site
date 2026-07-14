@@ -90,8 +90,8 @@ export default async function Image() {
               color: "rgba(17,17,17,0.65)",
             }}
           >
-            Precision-cut PEEK, PEI, POM & certified polymers. Quotes in
-            under 30 minutes.
+            Precision-cut PEEK, PEI, POM & certified polymers. Quoting
+            built for under-30-minute turnaround.
           </div>
         </div>
 

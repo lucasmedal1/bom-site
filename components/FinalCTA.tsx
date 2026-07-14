@@ -11,8 +11,8 @@ export default function FinalCTA() {
           Need Engineering Plastics Fast?
         </h2>
         <p className="mt-4 text-lg text-charcoal/60">
-          Request a quote today. Most requests answered in under 30 minutes
-          during business hours.
+          Request a quote today. We&apos;re building toward most requests
+          answered in under 30 minutes during business hours.
         </p>
 
         <a

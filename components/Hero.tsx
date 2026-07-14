@@ -15,8 +15,8 @@ export default function Hero() {
         </h1>
 
         <p className="mt-6 text-lg leading-relaxed text-charcoal/70">
-          Receive a quote in under 30 minutes. Precision-cut PEEK, PEI,
-          POM, Nylon, G10, and other engineering polymers.
+          Precision-cut PEEK, PEI, POM, Nylon, G10, and other engineering
+          polymers — with quoting built for under-30-minute turnaround as we scale.
         </p>
 
         <div className="mt-6 flex justify-center">

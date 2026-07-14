@@ -511,8 +511,8 @@ export default function RFQForm() {
                 {draft.dimensionMode === "cad" && (
                   <p className="mt-3 text-xs leading-relaxed text-charcoal/50">
                     Upload your CAD file and we&apos;ll analyze the geometry to
-                    determine the optimal material blank size. Quotes typically
-                    returned in under 30 minutes.
+                    determine the optimal material blank size. Our goal is
+                    quotes returned in under 30 minutes as we scale.
                   </p>
                 )}
               </div>

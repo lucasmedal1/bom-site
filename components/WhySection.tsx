@@ -17,9 +17,9 @@ const features = [
     accent: "bg-teal/10 border-teal/20",
   },
   {
-    title: "Quote in Under 30 Minutes",
+    title: "Quoting Built for Speed",
     description: [
-      "Automated quoting workflow.",
+      "Roadmap: quotes in under 30 minutes.",
       "Confirmed lead time on every order.",
       "Engineering support for material selection.",
     ],

@@ -2,7 +2,7 @@ const metrics = [
   {
     value: "<30",
     unit: "min",
-    label: "Quote Turnaround",
+    label: "Quote Target",
     color: "text-ocean",
   },
   {

@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.blueoceanmaterials.com"),
   title: "Blue Ocean Materials — Engineering Plastics, Delivered Smarter",
   description:
-    "Precision-cut PEEK, PEI, POM & certified engineering plastics. Quoting built for under-30-minute turnaround for aerospace, semiconductor, and industrial buyers.",
+    "Precision-cut PEEK, PEI, POM & certified engineering plastics, delivered smarter.",
   alternates: {
     canonical: "https://www.blueoceanmaterials.com",
   },

@@ -15,8 +15,8 @@ export default function Hero() {
         </h1>
 
         <p className="mt-6 text-lg leading-relaxed text-charcoal/70">
-          Precision-cut PEEK, PEI, POM, Nylon, G10, and other engineering
-          polymers.
+          Precision-cut PEEK, PEI, PTFE, POM, Nylon, G10, and other
+          high-performance polymers.
         </p>
 
         <div className="mt-6 flex justify-center">
